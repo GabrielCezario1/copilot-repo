@@ -1,12 +1,15 @@
 ---
 applyTo: "**/Entidades/*.cs,**/Servicos/**/*.cs,**/Repositorios/I*.cs"
 ---
+
 # Padrões da Camada Domínio (<Projeto>.Dominio)
 
 ## Responsabilidade
+
 Conter a lógica de negócio, entidades, repositórios (interfaces) e regras de validação.
 
 ## Estrutura de Pastas
+
 ```
 <Projeto>.Dominio/
 ├── libs/
@@ -35,19 +38,20 @@ Conter a lógica de negócio, entidades, repositórios (interfaces) e regras de 
 
 ## Nomenclatura
 
-| Elemento | Padrão | Exemplo |
-|----------|--------|---------|
-| Entidade | Singular, PascalCase | `Depoimento`, `Plano`, `Usuario` |
-| Interface Repositório | `I<Feature>Repositorio` | `IDepoimentosRepositorio` |
-| Serviço | `<Feature>Servicos` | `DepoimentosServicos` |
-| Interface Serviço | `I<Feature>Servicos` | `IDepoimentosServicos` |
-| Comando Inserir | `<Feature>InserirComando` | `DepoimentosInserirComando` |
-| Comando Editar | `<Feature>EditarComando` | `DepoimentosEditarComando` |
-| Consulta de Integração | `<Integracao><Recurso>Consulta` | `NorteboxPlantaConsulta` |
+| Elemento               | Padrão                          | Exemplo                          |
+| ---------------------- | ------------------------------- | -------------------------------- |
+| Entidade               | Singular, PascalCase            | `Depoimento`, `Plano`, `Usuario` |
+| Interface Repositório  | `I<Feature>Repositorio`         | `IDepoimentosRepositorio`        |
+| Serviço                | `<Feature>Servicos`             | `DepoimentosServicos`            |
+| Interface Serviço      | `I<Feature>Servicos`            | `IDepoimentosServicos`           |
+| Comando Inserir        | `<Feature>InserirComando`       | `DepoimentosInserirComando`      |
+| Comando Editar         | `<Feature>EditarComando`        | `DepoimentosEditarComando`       |
+| Consulta de Integração | `<Integracao><Recurso>Consulta` | `NorteboxPlantaConsulta`         |
 
 ## Padrões de Código
 
 ### Entidade
+
 ```csharp
 namespace <Projeto>.Dominio.<Feature>.Entidades;
 
@@ -78,15 +82,17 @@ public class <Entidade>
 ```
 
 ### Regras de Entidade (OBRIGATÓRIAS)
-| Regra | Motivo |
-|-------|--------|
-| Construtor vazio `protected` | EF Core precisa instanciar ao hidratar do banco |
-| Propriedades `virtual` | Necessário para lazy loading do EF Core |
-| Setters `protected` | Impede alteração direta; força uso dos métodos `Set` |
-| Método `Set<Propriedade>` | **OBRIGATÓRIO** para toda propriedade mutável |
-| Validações dentro dos `Set` | Centraliza invariantes de negócio |
+
+| Regra                        | Motivo                                               |
+| ---------------------------- | ---------------------------------------------------- |
+| Construtor vazio `protected` | EF Core precisa instanciar ao hidratar do banco      |
+| Propriedades `virtual`       | Necessário para lazy loading do EF Core              |
+| Setters `protected`          | Impede alteração direta; força uso dos métodos `Set` |
+| Método `Set<Propriedade>`    | **OBRIGATÓRIO** para toda propriedade mutável        |
+| Validações dentro dos `Set`  | Centraliza invariantes de negócio                    |
 
 ### Interface do Repositório
+
 ```csharp
 namespace <Projeto>.Dominio.<Feature>.Repositorios;
 
@@ -97,6 +103,7 @@ public interface I<Feature>Repositorio : IRepositorioBase<<Entidade>>
 ```
 
 ### Comando
+
 ```csharp
 namespace <Projeto>.Dominio.<Feature>.Servicos.Comandos;
 
@@ -108,6 +115,7 @@ public class <Feature>InserirComando
 ```
 
 ### Consulta de Integração (leitura externa)
+
 ```csharp
 namespace <Projeto>.Dominio.<Feature>.Servicos.Consultas;
 
@@ -120,6 +128,7 @@ public class <Integracao><Recurso>Consulta
 ```
 
 ### Serviço de Domínio
+
 ```csharp
 namespace <Projeto>.Dominio.<Feature>.Servicos;
 
@@ -159,6 +168,7 @@ public class <Feature>Servicos : I<Feature>Servicos
 ```
 
 ## Regras Importantes
+
 - Comandos são **exclusivos para escrita** (Inserir, Editar). Leituras de integrações usam Consultas
 - **Validação de negócio:** `throw new RegraDeNegocioExcecao("Mensagem")`
 - **Registro não encontrado:** `entidade.ValidarRegistroNaoFoiEncontrado("Mensagem")`

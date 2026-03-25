@@ -1,9 +1,11 @@
 ---
 applyTo: "**/*Request.cs,**/*Response.cs"
 ---
+
 # Padrões da Camada DataTransfer (<Projeto>.DataTransfer)
 
 ## Responsabilidade
+
 Definir os contratos de entrada e saída da API (DTOs) isolados das entidades de domínio.
 
 ## ⛔ PROIBIÇÃO ABSOLUTA — DataAnnotations
@@ -21,6 +23,7 @@ public string Campo { get; set; }
 Todas as validações devem estar nos **setters e construtores das entidades de domínio**, lançando `RegraDeNegocioExcecao`.
 
 ## Estrutura de Pastas
+
 ```
 <Projeto>.DataTransfer/
 └── <Feature>/
@@ -34,16 +37,17 @@ Todas as validações devem estar nos **setters e construtores das entidades de 
 
 ## Nomenclatura
 
-| Elemento | Padrão | Exemplo |
-|----------|--------|---------|
+| Elemento        | Padrão                    | Exemplo                     |
+| --------------- | ------------------------- | --------------------------- |
 | Request Inserir | `<Feature>InserirRequest` | `DepoimentosInserirRequest` |
-| Request Editar | `<Feature>EditarRequest` | `DepoimentosEditarRequest` |
-| Request Listar | `<Feature>ListarRequest` | `DepoimentosListarRequest` |
-| Response | `<Feature>Response` | `DepoimentosResponse` |
+| Request Editar  | `<Feature>EditarRequest`  | `DepoimentosEditarRequest`  |
+| Request Listar  | `<Feature>ListarRequest`  | `DepoimentosListarRequest`  |
+| Response        | `<Feature>Response`       | `DepoimentosResponse`       |
 
 ## Padrões de Código
 
 ### Request de Inserção
+
 ```csharp
 namespace <Projeto>.DataTransfer.<Feature>.Request;
 
@@ -55,6 +59,7 @@ public class <Feature>InserirRequest
 ```
 
 ### Request de Edição
+
 ```csharp
 namespace <Projeto>.DataTransfer.<Feature>.Request;
 
@@ -66,6 +71,7 @@ public class <Feature>EditarRequest
 ```
 
 ### Request de Listagem (com Paginação)
+
 ```csharp
 namespace <Projeto>.DataTransfer.<Feature>.Request;
 
@@ -78,6 +84,7 @@ public class <Feature>ListarRequest : PaginacaoFiltro
 ```
 
 ### Response
+
 ```csharp
 namespace <Projeto>.DataTransfer.<Feature>.Response;
 
@@ -90,6 +97,7 @@ public class <Feature>Response
 ```
 
 ## Regras
+
 - Herdar de `PaginacaoFiltro` para listagens paginadas
 - Campos opcionais devem ser nullable (`?`)
 - Sem DataAnnotations — sem exceções

@@ -1,12 +1,15 @@
 ---
 applyTo: "**/Repositorios/*.cs,**/Mapeamentos/*.cs,**/Contexto/*.cs,**/*Configuration.cs"
 ---
+
 # Padrões da Camada Infraestrutura (<Projeto>.Infra)
 
 ## Responsabilidade
+
 Implementar repositórios, mapeamentos EF Core, DbContext e serviços de infraestrutura (e-mail, S3, etc).
 
 ## Estrutura de Pastas
+
 ```
 <Projeto>.Infra/
 ├── Comum/
@@ -26,15 +29,16 @@ Implementar repositórios, mapeamentos EF Core, DbContext e serviços de infraes
 
 ## Nomenclatura
 
-| Elemento | Padrão | Exemplo |
-|----------|--------|---------|
-| Repositório | `<Feature>Repositorio` | `UsuariosRepositorio` |
-| Mapeamento | `<Entidade>Configuration` | `UsuarioConfiguration` |
-| Serviço de integração | `<Integracao>Servico` | `NorteboxServico` |
+| Elemento              | Padrão                    | Exemplo                |
+| --------------------- | ------------------------- | ---------------------- |
+| Repositório           | `<Feature>Repositorio`    | `UsuariosRepositorio`  |
+| Mapeamento            | `<Entidade>Configuration` | `UsuarioConfiguration` |
+| Serviço de integração | `<Integracao>Servico`     | `NorteboxServico`      |
 
 ## Padrões de Código
 
 ### Repositório da Feature
+
 ```csharp
 namespace <Projeto>.Infra.<Feature>.Repositorios;
 
@@ -47,6 +51,7 @@ public class <Feature>Repositorio : RepositorioBase<<Entidade>>, I<Feature>Repos
 ```
 
 ### Mapeamento EF Core (Fluent API)
+
 ```csharp
 namespace <Projeto>.Infra.<Feature>.Mapeamentos;
 
@@ -82,6 +87,7 @@ public class <Entidade>Configuration : IEntityTypeConfiguration<<Entidade>>
 ```
 
 ### AppDbContext
+
 ```csharp
 // Mapeamentos são descobertos automaticamente:
 modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
@@ -102,6 +108,7 @@ RecuperarAsync(long id, ct), RecuperarAsync(Expression<Func<T, bool>>, ct)
 ```
 
 ## Regras
+
 - ✅ Reutilizar métodos do `RepositorioBase<T>` — não criar acesso a dados customizado
 - ✅ Usar `Query()` para montar queries paginadas/filtradas com LINQ
 - ✅ Novos `IEntityTypeConfiguration<T>` são descobertos automaticamente por `ApplyConfigurationsFromAssembly`
