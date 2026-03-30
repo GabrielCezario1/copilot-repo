@@ -1,8 +1,29 @@
 ---
 description: "Extrair descrição de problema e regras de negócio a partir de um contexto fornecido pelo usuário. Faz perguntas apenas sobre as lacunas reais — nada que já esteja no contexto. Sem linguagem técnica."
-agent: "agent"
+agent: agent
 tools:
-  - vscode_askQuestions
+  [
+    vscode,
+    read,
+    agent,
+    edit,
+    search,
+    web,
+    "azure-mcp/*",
+    "microsoftdocs/mcp/*",
+    "com.microsoft/azure/*",
+    "microsoft/azure-devops-mcp/*",
+    browser,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+    ms-azuretools.vscode-azure-github-copilot/azure_recommend_custom_modes,
+    ms-azuretools.vscode-azure-github-copilot/azure_query_azure_resource_graph,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_auth_context,
+    ms-azuretools.vscode-azure-github-copilot/azure_set_auth_context,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_template_tags,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_templates_for_tag,
+    ms-azuretools.vscode-azureresourcegroups/azureActivityLog,
+    todo,
+  ]
 ---
 
 # Descrever Feature a Partir de Contexto
@@ -25,14 +46,14 @@ Só avance para o Passo 2 após receber algum contexto.
 
 Leia o contexto com atenção e, para cada categoria abaixo, classifique como **resolvido**, **ambíguo** ou **ausente**:
 
-| Categoria | Pergunta central |
-|-----------|-----------------|
-| **Problema** | Qual necessidade ou dificuldade a feature resolve? Por que ela precisa existir? |
-| **Atores** | Quem usa essa feature? Há perfis diferentes de usuário? |
-| **Ações por ator** | O que cada perfil pode fazer? O que um perfil pode fazer que outro não pode? |
-| **Dados** | Quais informações precisam ser armazenadas? Cada campo tem suas restrições claras (obrigatório, único, formato)? |
-| **Regras obrigatórias** | O que o sistema deve garantir, validar ou impedir? |
-| **Casos especiais** | O que acontece em situações-limite? O que ocorre quando uma regra é violada? |
+| Categoria               | Pergunta central                                                                                                 |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Problema**            | Qual necessidade ou dificuldade a feature resolve? Por que ela precisa existir?                                  |
+| **Atores**              | Quem usa essa feature? Há perfis diferentes de usuário?                                                          |
+| **Ações por ator**      | O que cada perfil pode fazer? O que um perfil pode fazer que outro não pode?                                     |
+| **Dados**               | Quais informações precisam ser armazenadas? Cada campo tem suas restrições claras (obrigatório, único, formato)? |
+| **Regras obrigatórias** | O que o sistema deve garantir, validar ou impedir?                                                               |
+| **Casos especiais**     | O que acontece em situações-limite? O que ocorre quando uma regra é violada?                                     |
 
 Considere **resolvido** somente quando a informação estiver explícita no contexto, sem dupla interpretação.
 
@@ -84,6 +105,7 @@ Quando não houver mais lacunas, crie o arquivo `.github/feature-<nome>.md` com 
 <Para cada regra de negócio relevante, descreva um cenário de uso real no formato abaixo:>
 
 **Cenário: <Título curto descrevendo a situação>**
+
 - **Dado que** <contexto ou estado inicial>
 - **Quando** <ação realizada pelo usuário ou pelo sistema>
 - **Então** <resultado esperado>

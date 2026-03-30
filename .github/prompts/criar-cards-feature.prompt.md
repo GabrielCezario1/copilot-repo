@@ -1,9 +1,39 @@
 ---
 description: "Gerar cards de desenvolvimento granulares para um agente AI implementar uma feature completa. Cada card é uma instrução precisa para o agente criar um artefato específico, seguindo os padrões das instructions do projeto. Sem código nos cards — apenas especificações."
-agent: "agent"
+agent: agent
+tools:
+  [
+    vscode,
+    read,
+    agent,
+    edit,
+    search,
+    web,
+    "azure-mcp/*",
+    "microsoftdocs/mcp/*",
+    "com.microsoft/azure/*",
+    "microsoft/azure-devops-mcp/*",
+    browser,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+    ms-azuretools.vscode-azure-github-copilot/azure_recommend_custom_modes,
+    ms-azuretools.vscode-azure-github-copilot/azure_query_azure_resource_graph,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_auth_context,
+    ms-azuretools.vscode-azure-github-copilot/azure_set_auth_context,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_template_tags,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_templates_for_tag,
+    ms-azuretools.vscode-azureresourcegroups/azureActivityLog,
+    todo,
+  ]
 ---
 
 # Gerar Cards de Desenvolvimento para Agente AI
+
+> ## ⛔ REGRA ABSOLUTA — PROIBIDO ESCREVER CÓDIGO NOS CARDS
+>
+> **Nunca** escreva blocos de código (C#, SQL, JSON, YAML ou qualquer outra linguagem) nos cards gerados.
+> Cards descrevem **o quê** criar e **quais regras** seguir — **não mostram como** o código deve ser escrito.
+> O agente que executará os cards lerá as instructions do projeto e saberá implementar.
+> Violações desta regra invalidam o documento inteiro.
 
 Atue como um Tech Lead Sênior responsável por decompor uma feature em tarefas atômicas para um agente AI executar. Seu objetivo é produzir cards tão precisos que o agente nunca precise adivinhar ou tomar decisões arquiteturais — todas as decisões já estão nos cards ou nas instructions.
 
@@ -29,6 +59,7 @@ Leia também **todos** os arquivos em `.github/instructions/` para entender os p
 - `.github/instructions/jobs.instructions.md` (se a feature tiver jobs)
 
 E o arquivo de instruções gerais do projeto:
+
 - `.github/copilot-instructions.md`
 
 ---
@@ -79,12 +110,15 @@ Com base nos documentos e nas respostas, monte a sequência de cards seguindo **
 
 ## Passo 4 — Gerar o Documento
 
+> ⛔ **LEMBRETE ANTES DE ESCREVER QUALQUER CARD:** nenhum card pode conter blocos de código. Se você sentir vontade de escrever `csharp`, `sql`, `json` ou qualquer bloco de código — pare. Converta a informação em prosa, lista ou tabela declarativa.
+
 Quando não houver dúvidas, crie o arquivo `.github/cards-desenvolvimento-<nome>.md` com **exatamente** esta estrutura:
 
 ```markdown
 # Cards de Desenvolvimento — <NomeSolution> / <NomeFeature>
 
 > **Leia antes de executar qualquer card:**
+>
 > - `.github/copilot-instructions.md` — arquitetura, nomenclatura e regras absolutas do projeto
 > - `.github/feature-<nome>.md` — descrição completa da feature, regras de negócio e critérios de aceite
 > - `.github/tecnologias-<nome>.md` — serviços Azure utilizados
@@ -107,28 +141,33 @@ Quando não houver dúvidas, crie o arquivo `.github/cards-desenvolvimento-<nome
 
 ### Artefatos a criar
 
-| Arquivo | Caminho completo |
-|---------|-----------------|
+| Arquivo            | Caminho completo                                    |
+| ------------------ | --------------------------------------------------- |
 | `<NomeArquivo>.cs` | `<NomeSolution>.<Camada>/<Feature>/<Subcategoria>/` |
 
 ### Especificação
+
+> ⛔ **Sem código aqui.** Descreva em linguagem declarativa — listas, tabelas, prosa. Nenhum bloco de código.
 
 <Descrever O QUÊ o agente deve implementar. Não escrever código. Usar listas, tabelas e linguagem declarativa. Cobrir:>
 
 **Campos / Propriedades** (quando aplicável):
 
-| Nome | Tipo | Obrigatório? | Regras de validação |
-|------|------|:------------:|---------------------|
-| <campo> | <tipo> | Sim/Não | <regra extraída do feature doc> |
+| Nome    | Tipo   | Obrigatório? | Regras de validação             |
+| ------- | ------ | :----------: | ------------------------------- |
+| <campo> | <tipo> |   Sim/Não    | <regra extraída do feature doc> |
 
 **Comportamentos** (quando aplicável):
+
 - <Método ou ação que o artefato deve ter, com a regra de negócio que justifica>
 - <Ex: "O método `Desativar()` deve existir — registros nunca são deletados fisicamente">
 
 **Relacionamentos** (quando aplicável):
+
 - <Descrever relações com outras entidades ou interfaces>
 
 **Configurações específicas** (quando aplicável — ex: mapeamento EF Core, registro IoC, rota HTTP):
+
 - <Campo X deve ser mapeado na coluna Y da tabela Z>
 - <Interface X deve ser registrada como Scoped no contêiner de DI>
 
@@ -140,6 +179,7 @@ Quando não houver dúvidas, crie o arquivo `.github/cards-desenvolvimento-<nome
 ### Critério de conclusão
 
 O card está concluído quando:
+
 - [ ] O arquivo foi criado no caminho correto
 - [ ] O namespace segue o padrão `<NomeSolution>.<Camada>.<Feature>.<Subcategoria>`
 - [ ] <Critério específico extraído das regras de negócio ou da instruction da camada>
@@ -154,13 +194,13 @@ O card está concluído quando:
 
 ### Sobre o conteúdo de cada card
 
-- ⛔ **Sem código nos cards**: não escreva blocos de código C# — o agente usará as instructions para saber como implementar
+- ⛔ **PROIBIDO código nos cards** — isso inclui C#, SQL, JSON, XML, YAML e qualquer outra linguagem. Nenhum bloco de código (nem inline, nem fenced). O agente que executará os cards tem acesso às instructions e sabe como implementar; ele não precisa de exemplos de código — precisa de especificação clara do que criar. Se a tentação for escrever código para "ser mais claro", converta a ideia em uma frase declarativa, uma tabela de campos ou uma lista de comportamentos
 - ⛔ **Sem decisões em aberto**: todo campo, toda validação, todo relacionamento deve estar especificado — o agente não deve precisar inventar nada
 - ⛔ **Sem cards genéricos**: "Crie os DTOs" não é um card — "Crie `UsuariosInserirRequest` com os campos X, Y e Z, onde X é obrigatório e Y tem limite de 100 caracteres" é um card
 - ✅ As regras de validação nos cards devem ser extraídas diretamente do `feature-<nome>.md` — não invente regras
 - ✅ Os nomes de arquivos, namespaces e classes devem seguir **exatamente** a nomenclatura definida em `copilot-instructions.md`
 - ✅ Cada card deve referenciar **explicitamente** qual instruction file o agente deve seguir
-- ✅ O campo "Contexto" de cada card deve ser escrito em linguagem de negócio — o agente entende melhor quando sabe o *porquê*, não só o *o quê*
+- ✅ O campo "Contexto" de cada card deve ser escrito em linguagem de negócio — o agente entende melhor quando sabe o _porquê_, não só o _o quê_
 - ✅ O critério de conclusão deve ser verificável — o agente deve conseguir confirmar cada item sem ambiguidade
 
 ### Sobre a granularidade

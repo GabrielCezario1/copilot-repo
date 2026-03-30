@@ -1,8 +1,29 @@
 ---
 description: "Auditar uma feature implementada verificando se todos os artefatos seguem os padrões de desenvolvimento definidos nas instructions do projeto. Gera um relatório estruturado com conformidades, violações e correções sugeridas."
-agent: "agent"
+agent: agent
 tools:
-  - vscode_askQuestions
+  [
+    vscode,
+    read,
+    agent,
+    edit,
+    search,
+    web,
+    "azure-mcp/*",
+    "microsoftdocs/mcp/*",
+    "com.microsoft/azure/*",
+    "microsoft/azure-devops-mcp/*",
+    browser,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+    ms-azuretools.vscode-azure-github-copilot/azure_recommend_custom_modes,
+    ms-azuretools.vscode-azure-github-copilot/azure_query_azure_resource_graph,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_auth_context,
+    ms-azuretools.vscode-azure-github-copilot/azure_set_auth_context,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_template_tags,
+    ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_templates_for_tag,
+    ms-azuretools.vscode-azureresourcegroups/azureActivityLog,
+    todo,
+  ]
 ---
 
 # Auditar Feature Implementada
@@ -40,26 +61,26 @@ Antes de analisar qualquer código, leia **obrigatoriamente** todos os documento
 
 Busque no workspace todos os arquivos relacionados à feature, seguindo a estrutura esperada:
 
-| Camada | Caminho esperado |
-|--------|-----------------|
-| Entidade(s) | `<Solution>.Dominio/<Feature>/Entidades/` |
-| Enum(s) | `<Solution>.Dominio/<Feature>/Enuns/` |
-| Interface Repositório | `<Solution>.Dominio/<Feature>/Repositorios/` |
-| Comando(s) | `<Solution>.Dominio/<Feature>/Servicos/Comandos/` |
-| Interface Serviço Domínio | `<Solution>.Dominio/<Feature>/Servicos/Interfaces/` |
-| Serviço Domínio | `<Solution>.Dominio/<Feature>/Servicos/` |
-| Mapeamento EF Core | `<Solution>.Infra/<Feature>/Mapeamentos/` |
-| Repositório | `<Solution>.Infra/<Feature>/Repositorios/` |
-| DTOs Request | `<Solution>.DataTransfer/<Feature>/Request/` |
-| DTOs Response | `<Solution>.DataTransfer/<Feature>/Response/` |
-| Profile AutoMapper | `<Solution>.Aplicacao/<Feature>/Profiles/` |
-| Interface AppServico | `<Solution>.Aplicacao/<Feature>/Servicos/Interfaces/` |
-| AppServico | `<Solution>.Aplicacao/<Feature>/Servicos/` |
-| Controller | `<Solution>.Api/Controllers/<Feature>/` |
-| IoC | `<Solution>.Ioc/ConfiguracoesInjecoesDependencia.cs` |
-| IoC AutoMapper | `<Solution>.Ioc/ConfiguracoesAutoMapper.cs` |
-| DbContext | `<Solution>.Infra/Contexto/AppDbContext.cs` |
-| Jobs | `<Solution>.Jobs/<Feature>/` (se existir) |
+| Camada                    | Caminho esperado                                      |
+| ------------------------- | ----------------------------------------------------- |
+| Entidade(s)               | `<Solution>.Dominio/<Feature>/Entidades/`             |
+| Enum(s)                   | `<Solution>.Dominio/<Feature>/Enuns/`                 |
+| Interface Repositório     | `<Solution>.Dominio/<Feature>/Repositorios/`          |
+| Comando(s)                | `<Solution>.Dominio/<Feature>/Servicos/Comandos/`     |
+| Interface Serviço Domínio | `<Solution>.Dominio/<Feature>/Servicos/Interfaces/`   |
+| Serviço Domínio           | `<Solution>.Dominio/<Feature>/Servicos/`              |
+| Mapeamento EF Core        | `<Solution>.Infra/<Feature>/Mapeamentos/`             |
+| Repositório               | `<Solution>.Infra/<Feature>/Repositorios/`            |
+| DTOs Request              | `<Solution>.DataTransfer/<Feature>/Request/`          |
+| DTOs Response             | `<Solution>.DataTransfer/<Feature>/Response/`         |
+| Profile AutoMapper        | `<Solution>.Aplicacao/<Feature>/Profiles/`            |
+| Interface AppServico      | `<Solution>.Aplicacao/<Feature>/Servicos/Interfaces/` |
+| AppServico                | `<Solution>.Aplicacao/<Feature>/Servicos/`            |
+| Controller                | `<Solution>.Api/Controllers/<Feature>/`               |
+| IoC                       | `<Solution>.Ioc/ConfiguracoesInjecoesDependencia.cs`  |
+| IoC AutoMapper            | `<Solution>.Ioc/ConfiguracoesAutoMapper.cs`           |
+| DbContext                 | `<Solution>.Infra/Contexto/AppDbContext.cs`           |
+| Jobs                      | `<Solution>.Jobs/<Feature>/` (se existir)             |
 
 Se algum artefato esperado não existir, registre como **artefato ausente** no relatório.
 
@@ -183,13 +204,13 @@ Com a análise completa, apresente o relatório no seguinte formato:
 
 ## Resumo
 
-| Métrica | Valor |
-|---------|-------|
-| Artefatos analisados | X |
-| Artefatos ausentes | X |
-| ✅ Conformidades | X |
-| ⚠️ Atenções | X |
-| ❌ Violações | X |
+| Métrica              | Valor |
+| -------------------- | ----- |
+| Artefatos analisados | X     |
+| Artefatos ausentes   | X     |
+| ✅ Conformidades     | X     |
+| ⚠️ Atenções          | X     |
+| ❌ Violações         | X     |
 
 ---
 
