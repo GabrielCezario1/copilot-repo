@@ -126,7 +126,7 @@ if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out var userId))
 
 - ❌ NÃO colocar lógica de negócio nos controllers
 - ❌ NÃO acessar repositórios diretamente
-- ❌ NÃO retornar entidades do domínio
+- ❌ NÃ O retornar entidades do domínio
 - ✅ Sempre delegar para AppServicos
 - ✅ Usar DTOs (Request/Response) para entrada/saída
 - ✅ Validar claims do JWT quando necessário
